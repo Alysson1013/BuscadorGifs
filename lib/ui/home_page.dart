@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:buscadorgifs/ui/gif_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -115,6 +116,11 @@ class _HomePageState extends State<HomePage> {
                   height: 300.0,
                   fit: BoxFit.cover
               ),
+              onTap: (){
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => GifPage(snapshot.data["data"][index]))
+                );
+              },
             );
           } else {
             return Container(
