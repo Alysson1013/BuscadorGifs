@@ -11,9 +11,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   //Função de Requisição
+  String _search;
+  int _offset;
+
   Future<Map> _getGIfs() async{
-    String _search;
-    int _offset;
     //Resposta
     http.Response response;
 
@@ -53,6 +54,11 @@ class _HomePageState extends State<HomePage> {
               ),
               style: TextStyle(color: Colors.white, fontSize: 18.0),
               textAlign: TextAlign.center,
+              onSubmitted: (text) {
+                  setState(() {
+                    _search = text;
+                  });
+                },
             ),
           ),
           Expanded(
@@ -87,12 +93,16 @@ class _HomePageState extends State<HomePage> {
         padding: EdgeInsets.all(10.0),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          crossAxisSpacing: 10.0
+          crossAxisSpacing: 10.0,
+          mainAxisSpacing: 10.0
         ),
         itemCount: snapshot.data["data"].length,
         itemBuilder: (context, index){
           return GestureDetector(
-            child: Image.network(snapshot.data["data"][index]["images"]["fixed_height"]["url"]),
+            child: Image.network(snapshot.data["data"][index]["images"]["fixed_height"]["url"],
+              height: 300.0,
+              fit: BoxFit.cover
+            ),
           );
         }
     );
